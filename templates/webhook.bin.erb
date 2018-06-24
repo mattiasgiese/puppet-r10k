@@ -149,6 +149,8 @@ class Server < Sinatra::Base
     verify_signature(decoded) if $config['github_secret']
     data = JSON.parse(decoded, :quirks_mode => true)
 
+    $logger.info("Received data structure: #{data}")
+
     # Iterate the data structure to determine what's should be deployed
     branch = (
         data['ref']                                          ||  # github & gitlab
