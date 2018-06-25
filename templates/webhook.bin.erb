@@ -354,7 +354,7 @@ class Server < Sinatra::Base
       notifier = RocketChat::Notifier.new $config['rocketchat_webhook']
       notifier.username = rocketchat_user
       notifier.channel = rocketchat_channel
-      
+
       if status_message[:branch]
         target = status_message[:branch]
       elsif status_message[:module]
@@ -513,11 +513,11 @@ class Server < Sinatra::Base
           end
       end
     end #end run_prefix_command
-    
+
 
     # :deploy and :deploy_module methods are vulnerable to shell
     # injection. e.g. a branch named ";yes". Or a malicious POST request with
-    # "; rm -rf *;" as the payload. 
+    # "; rm -rf *;" as the payload.
     def sanitize_input(input_string)
       sanitized = Shellwords.shellescape(input_string)
       $logger.info("module or branch name #{sanitized} had to be escaped!") unless input_string == sanitized
